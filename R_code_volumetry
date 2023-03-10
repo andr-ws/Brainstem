@@ -1,0 +1,95 @@
+library(ggridges)
+library(scales)
+library(ggplot2)
+
+% Load mod matrix used in ComBaT harmonisation
+
+mod_matrix <- read_excel("~/Desktop/test/Mod_matrix.xlsx", 
+    col_names = FALSE)
+
+demographics <- data.frame(sex = mod_matrix[, 1], group = mod_matrix[, 2], etiv = mod_matrix[, 3], age = mod_matrix[, 4], dis_dur = mod_matrix[, 5])
+names(demographics) <- c("sex", "group", "etiv", "age", "dis_dur")
+
+% Load datasets %
+
+library(readxl)
+freesurfer_brainstem_vols <- read_excel("~/Desktop/test/FS_harm.xlsx", 
+    col_names = FALSE)
+freesurfer_brainstem_vols <- t(freesurfer_brainstem_vols)
+
+medulla <- freesurfer_brainstem_vols[,1]
+pons <- freesurfer_brainstem_vols[,2]
+scp <- freesurfer_brainstem_vols[,3]
+midbrain <- freesurfer_brainstem_vols[,4]
+brainstem <- freesurfer_brainstem_vols[,5]
+
+suit_cerebellum_vols <- read_excel("~/Desktop/test/suit_harm.xlsx", 
+    col_names = FALSE)
+  suit_cerebellum_vols <- t(suit_cerebellum_vols)
+left_dn <- suit_cerebellum_vols[,1]
+right_dn <- suit_cerebellum_vols[,2]
+
+regions <- list(medulla = medulla, pons = pons, scp = scp, midbrain = midbrain, brainstem = brainstem, left_dn = left_dn, right_dn = right_dn)
+
+# Create an empty list to store t.test results
+t_test_results <- list()
+
+for (i in seq_along(regions)) {
+  y <- regions[[i]]
+  data <- data.frame(demographics, y)
+  data <- t(t(data))
+  data <- as.data.frame(data)
+
+  model <- lm(y ~ sex + etiv + age + dis_dur, data = data)
+
+  resid <- model$residuals
+
+  cor_region <- y + resid
+
+  non_resp <- cor_region[c(1,2,3,4,8,9,11,12,13,15,19,23,24,26)]
+  resp <- cor_region[c(5,6,7,10,14,16,17,18,20,21,22,25,27)]
+
+  if (!is.matrix(model$residuals)) {
+  model$residuals <- as.matrix(model$residuals)
+  }
+
+  t_test <- t.test(non_resp, resp)
+  t_test_results[[i]] <- t_test
+
+
+  region_df <- data.frame(
+    Group = c(rep("Responders", length(resp)), rep("S-O Responders", length(non_resp))),
+    corrected_Vols = c(resp, non_resp))
+
+  ggplot(region_df, aes(x = Group, y = corrected_Vols)) + 
+     ggdist::stat_halfeye(
+         aes(fill = Group),
+         adjust = .5, 
+         width = .2, 
+         .width = 0, 
+         justification = -.2, 
+         point_colour = NA,
+         size = 4
+     ) + 
+     geom_boxplot(
+         width = .05, 
+         outlier.shape = NA
+     ) +
+     ## add justified jitter from the {gghalves} package
+     gghalves::geom_half_point(
+         ## draw jitter on the left
+         side = "l", 
+         ## control range of jitter
+         range_scale = .2, 
+         ## add some transparency
+         alpha = .65,
+         size = 1
+     ) +
+     coord_cartesian(xlim = c(1.2, NA), clip = "off") +
+     scale_fill_manual(values = c("grey40", "grey80")) + # set the colors manually
+     labs(title = paste("Brain region:", names(regions)[i])) + # Add title
+     theme(plot.title = element_text(hjust = 0.5)) # Center title
+
+    ggsave(paste0("~/Desktop/", names(regions)[i], ".png"), plot = last_plot(), width = 6, height = 4, dpi = 600, device = "png")
+
+}
