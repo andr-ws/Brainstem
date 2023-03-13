@@ -1,0 +1,72 @@
+% Need to pre-process
+
+% Set origin at AC
+
+% copy the files from SynthSR to SUIT and call them t1.nii
+
+mainDir = '/Users/neuro-239/Desktop/HCP_Analysis';
+addpath('/Applications/spm12/toolbox/suit/');
+
+dirPattern = 'sub*'
+subDirs = dir(fullfile(mainDir, dirPattern))
+N = setdiff({subDirs([subDirs.isdir]).name},{'.','..'});
+
+fid = fopen('/Applications/spm12/toolbox/suit/cerebellar_atlases/Cerebellum-SUIT.nii.txt');
+regNam = textscan(fid,'%s%s%s');
+regNam = regNam{1,2}
+fclose(fid);
+
+for i = 1:numel(N)
+	T = dir(fullfile(mainDir, N{i},'T1w.nii.gz'))
+
+
+	%is_hidden = arrayfun(@(x) startsWith(x.name, '.'), T);
+    %T = T(~is_hidden); % remove hidden dirs (., .., DS_store)
+
+	C = fullfile(mainDir, N{i}, T.name);
+	T1 = gunzip(C);
+
+	suit_isolate_seg(T1);
+
+	% Set the paths to the gray, white, and isolation files
+    gray_file = dir(fullfile(mainDir, N{i}, 'T1w_seg1.nii'));
+    white_file = dir(fullfile(mainDir, N{i}, 'T1w_seg2.nii'));
+    isolation_file = dir(fullfile(mainDir, N{i}, '*T1w_pcereb.nii'));
+
+    g_file = fullfile(mainDir, N{i}, gray_file.name);
+    w_file = fullfile(mainDir, N{i}, white_file.name);
+    i_file = fullfile(mainDir, N{i}, isolation_file.name);
+
+    % Set the gray, white, and isolation file paths in the job struct
+    job.subjND.gray = {g_file};
+    job.subjND.white = {w_file};
+    job.subjND.isolation = {i_file};
+
+    suit_normalize_dartel(job);
+
+    % set paths to affine, flowfield, template and reference image
+
+    T1 = dir(fullfile(mainDir, N{i},'T1w.nii'))
+	affine_file = dir(fullfile(mainDir, N{i}, 'Affine_*.mat'));
+    flowfield_file = dir(fullfile(mainDir, N{i}, 'u_*_seg1.nii'));
+    template_file = {'/Applications/spm12/toolbox/suit/cerebellar_atlases/Cerebellum-SUIT.nii'}
+
+    T1_file = fullfile(mainDir, N{i}, T1.name);
+    Aff_file = fullfile(mainDir, N{i}, affine_file.name);
+    Ff_file = fullfile(mainDir, N{i}, flowfield_file.name);
+
+	job.Affine = {Aff_file};
+	job.flowfield = {Ff_file};
+	job.resample = {template_file};
+	job.ref = {T1_file};
+
+	suit_reslice_dartel_inv(job);
+
+	iw_file = dir(fullfile(mainDir, N{i}, 'iw*seg1.nii'))
+	iw_file = fullfile(mainDir, N{i}, iw_file.name);
+
+	vols = suit_vol(iw_file, 'Atlas');
+
+	dlmwrite(fullfile(mainDir, N{i}, 'lobule_vols.txt'), vols.vmm, 'delimiter', '\n');
+
+end
