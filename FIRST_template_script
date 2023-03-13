@@ -1,0 +1,9 @@
+T1dir=~/Desktop/CD_Morph
+
+for dir in $(ls $T1dir); do
+	SUB=${dir}
+	concat_bvars out-BrStem_first.bvars
+
+	run_first_all -i $dir/*_T1.nii -o $dir/out -s BrStem
+
+done
