@@ -1,0 +1,8 @@
+
+
+brstem_mask=~/..file
+
+# calculate intersection
+fslmaths vta_seed -mul $brstem_mask $outdir/bstemXvta
+intersection=$(fslstats $outdir/bstemXvta -V)
+
