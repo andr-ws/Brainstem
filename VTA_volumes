@@ -1,0 +1,11 @@
+# Bash script to calculate volume of VTA masks (use as covariate for VTA "amplitude")
+
+VTAdir=~/Desktop/CD_VTA_masks
+
+for file in $VTAdir/s*; do
+
+	Z=$(fslstats $file -V)
+	# extract second number (volume in cubic mm)
+	vol=$(echo $Z | sed 's/^[^[:space:]]*[[:space:]]\{1,\}//')
+	echo $vol >> $VTAdir/vta_vols.txt
+done
