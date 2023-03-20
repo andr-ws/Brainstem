@@ -2,7 +2,11 @@
 
 brstem_mask=~/..file
 
-# calculate intersection
-fslmaths vta_seed -mul $brstem_mask $outdir/bstemXvta
-intersection=$(fslstats $outdir/bstemXvta -V)
+for dir in $outdir/s*; do
+  # calculate intersection
+  fslmaths vta_seed -mul $brstem_mask $outdir/bstemXvta
+  intersection=$(fslstats $outdir/bstemXvta -V)
 
+  intersection=$(echo $intersection | sed 's/^[^[:space:]]*[[:space:]]\{1,\}//')
+  echo $intersection >> $outdir/vta_intersection.txt
+done
