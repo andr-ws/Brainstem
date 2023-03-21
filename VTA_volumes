@@ -1,6 +1,6 @@
 # Bash script to calculate volume of VTA masks (use as covariate for VTA "amplitude")
 
-VTAdir=~/Desktop/CD_VTA_masks
+VTAdir=~/Desktop/CD/CD_VTA_masks
 
 for file in $VTAdir/s*; do
 
