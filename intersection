@@ -1,6 +1,6 @@
 brstem_mask=~/Desktop/CD/BrainstemPaper/SigbrStem_struc_seed.nii
 outdir=~/Desktop/CD/BrainstemPaper/VTA_tracts
-
+touch $outdir/vta_intersection.txt
 for file in $outdir/s*; do
   if [[ $file == $outdir/subj35* || $file == $outdir/subj50* ]];
   echo 0 >> $outdir/vta_intersection.txt
