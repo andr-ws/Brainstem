@@ -1,13 +1,16 @@
-brstem_mask=~/Desktop/CD/BrainstemPaper/SigbrStem_struc_seed.nii
-outdir=~/Desktop/CD/BrainstemPaper/VTA_tracts
+outdir=~/Desktop/CD/VTA_tracts
 touch $outdir/vta_intersection.txt
-for file in $outdir; do
+for file in $outdir/s*; do
+
+  echo $file
+
   if [[ $file == $outdir/subj35* || $file == $outdir/subj50* ]];
-  echo 0 >> $outdir/vta_intersection.txt
+    echo 0 >> $outdir/vta_intersection.txt
   else
   
   # calculate intersection
-  fslmaths $file -mul $brstem_mask $outdir/bstemXvta
+
+  fslmaths $file -mul ~/Desktop/CD/BrainstemPaper/SigBrStem_struc_seed.nii $outdir/$file_i
   
   intersection=$(fslstats $outdir/bstemXvta -V)
 
