@@ -1,0 +1,56 @@
+% Read in files
+vta_intersection <- read.table("~/Desktop/bstem/vta_intersection.txt", quote="\"", comment.char="")
+vta_vols <- read.table("~/Desktop/bstem/vta_vols.txt", quote="\"", comment.char="")
+
+% Combine into a data frame
+
+data <- data.frame(vta_intersection,vta_vols)
+
+% Compute linear model to normalise for VTA size
+
+data_model <- lm(V1 ~ V1.1, data=data)
+
+% Extract residuals of intersection (corrected for VTA size)
+
+resid <- data_model$residuals
+
+% Group based on response
+non_VTA <- resid[c(1,2,3,4,8,9,10,11,12,19,21)]
+resp_VTA <- resid[c(5,6,7,13,14,15,16,17,18,20,22)]
+
+% Compute t-test
+VTA_t_test <- t.test(non_VTA, resp_VTA)
+
+
+%%%% Code for raincloud plot
+
+VTA_df <- data.frame(
+    Group = c(rep("Responders", length(resp_VTA)), rep("S-O Responders", length(non_VTA))),
+    corrected_Vols = c(resp_VTA, non_VTA))
+
+ggplot(VTA_df, aes(x = Group, y = corrected_Vols)) + 
+    ggdist::stat_halfeye(
+        aes(fill = Group),
+        adjust = .5, 
+        width = .8, 
+        .width = 0, 
+        justification = -.2, 
+        point_colour = NA,
+        size = 12
+    ) + 
+    geom_boxplot(
+        width = .05, 
+        outlier.shape = NA
+    ) +
+    ## add justified jitter from the {gghalves} package
+    gghalves::geom_half_point(
+        ## draw jitter on the left
+        side = "l", 
+        ## control range of jitter
+        range_scale = .4, 
+        ## add some transparency
+        alpha = .65,
+        size = 2.5
+    ) +
+    coord_cartesian(xlim = c(1.2, NA), clip = "off") +
+    scale_fill_manual(values = c("grey40", "grey80"))
