@@ -4,7 +4,7 @@ library(ggplot2)
 
 % Load mod matrix used in ComBaT harmonisation
 
-mod_matrix <- read_excel("~/Desktop/test/Mod_matrix.xlsx", 
+mod_matrix <- read_excel("~/Desktop/CD_Volumetry/Mod_matrix.xlsx", 
     col_names = FALSE)
 
 demographics <- data.frame(sex = mod_matrix[, 1], group = mod_matrix[, 2], etiv = mod_matrix[, 3], age = mod_matrix[, 4], dis_dur = mod_matrix[, 5])
@@ -28,6 +28,8 @@ suit_cerebellum_vols <- read_excel("~/Desktop/test/suit_harm.xlsx",
   suit_cerebellum_vols <- t(suit_cerebellum_vols)
 left_dn <- suit_cerebellum_vols[,1]
 right_dn <- suit_cerebellum_vols[,2]
+
+suit_peduncle_vols <- read.table("~/
 
 regions <- list(medulla = medulla, pons = pons, scp = scp, midbrain = midbrain, brainstem = brainstem, left_dn = left_dn, right_dn = right_dn)
 
