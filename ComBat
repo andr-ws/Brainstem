@@ -4,9 +4,9 @@ ComBat Code
 addpath('/Users/neuro-239/ApplicationsComBatHarmonization-master/Matlab/scripts');
 
 % Assign dats as the input matrix (raw (pre-harmonised) SUIT (peduncles) and FS brainstem volumes)
-#suit_dat = xlsread('~/Desktop/suit_dat.xlsx');
+#suit_dat = xlsread('~/Desktop/CD_Volumetry/suit_dat.xlsx');
 
-fs_dat = xlsread('~/Desktop/brainstem_dat.xlsx');
+fs_dat = xlsread('~/Desktop/CD_Volumetry/brainstem_dat.xlsx');
 
 peduncle_dat = readtable('~/Desktop .... 
 
@@ -15,8 +15,11 @@ batch = [1 1 1 1 1 2 1 3 1 1 1 3 1 3 3 1 3 3 2 1 3 1 3 1 1 3 3];
 
 % biological covariate matrix: preserve variability associated with these variables
 
-% Order is sex (1 = F), group (2 = resp, 66%), etiv, age, disease duration
-mod = xlsread('/Users/neuro-239/Desktop/mod_data.xlsx');
+% Order is sex (1 = F), group (2 = resp, 66%), etiv, age, time since implantation
+mod = xlsread('~/Desktop/CD_Volumetry/Mod_matrix.xlsx');
+
+
+% Should these be combined?
 
 suit_harm = combat(fs_dat, batch, mod, 1);
 fs_harm = combat(suit_dat, batch, mod, 1);
@@ -28,7 +31,7 @@ fs_harm = combat(suit_dat, batch, mod, 1);
 harm_suit = table(suit_harm);
 harm_fs = table(suit_harm);
 
-harm_suit_file = '/Users/neuro-239/Desktop/suit_harm.xlsx';
+harm_suit_file = '/Users/neuro-239/Desktop/CD_Volumetry/suit_harm.xlsx';
 writetable(harm_suit_file,filename,'Sheet',1,'WriteVariableNames',false);
 
 harm_fs_file = '/Users/neuro-239/Desktop/fs_harm.xlsx';
