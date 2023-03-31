@@ -14,24 +14,22 @@ direc=~/Desktop/CervicalDystonia/SUIT_cereb
 
 for dir in $(ls $direc); do
 
-	SUB=${dir: -6}
+	file=${dir}/iw_SUIT_1mm*.nii
 
-	file=${direc}/${SUB}/iw_SUIT_1mm*.nii
+	fslmaths ${file} ${dir}/mask_no_nan.nii
 
-	fslmaths ${file} $direc/${SUB}/mask_no_nan.nii
+	${dir}/mask_no_nan.nii -thr 3 -uthr 3 -bin ${dir}/tmp3.nii
+	${dir}/mask_no_nan.nii -thr 4 -uthr 4 -bin ${dir}/tmp4.nii
+	${dir}/mask_no_nan.nii -thr 5 -uthr 5 -bin ${dir}/tmp5.nii
+	${dir}/mask_no_nan.nii -thr 6 -uthr 6 -bin ${dir}/tmp6.nii
 
-	$direc/${SUB}/mask_no_nan.nii -thr 3 -uthr 3 -bin $direc/${SUB}/tmp3.nii
-	$direc/${SUB}/mask_no_nan.nii -thr 4 -uthr 4 -bin $direc/${SUB}/tmp4.nii
-	$direc/${SUB}/mask_no_nan.nii -thr 5 -uthr 5 -bin $direc/${SUB}/tmp5.nii
-	$direc/${SUB}/mask_no_nan.nii -thr 6 -uthr 6 -bin $direc/${SUB}/tmp6.nii
+	rMCP=$(fslstats ${dir}/tmp3.nii -V | awk '{print $1}')
+	lMCP=$(fslstats ${dir}/tmp4.nii -V | awk '{print $1}')
+	rICP=$(fslstats ${dir}/tmp5.nii -V | awk '{print $1}')
+	lICP=$(fslstats ${dir}/tmp6.nii -V | awk '{print $1}')
 
-	rMCP=$(fslstats $direc/${SUB}/tmp3.nii -V | awk '{print $1}')
-	lMCP=$(fslstats $direc/${SUB}/tmp4.nii -V | awk '{print $1}')
-	rICP=$(fslstats $direc/${SUB}/tmp5.nii -V | awk '{print $1}')
-	lICP=$(fslstats $direc/${SUB}/tmp6.nii -V | awk '{print $1}')
+	echo "$rMCP\n$lMCP\n$rICP\n$lICP" >> ${dir}/peduncles.txt
 
-	echo "$rMCP\n$lMCP\n$rICP\n$lICP" >> $direc/${SUB}/peduncles.txt
-
-	rm $direc/${SUB}/tmp*
+	rm ${dir}/tmp*
 
 done
