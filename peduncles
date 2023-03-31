@@ -18,10 +18,10 @@ for dir in $(ls $direc); do
 
 	fslmaths ${file} ${dir}/mask_no_nan.nii
 
-	${direc}/${dir}/mask_no_nan.nii -thr 3 -uthr 3 -bin ${direc}/${dir}/tmp3.nii
-	${direc}/${dir}/mask_no_nan.nii -thr 4 -uthr 4 -bin ${direc}/${dir}/tmp4.nii
-	${direc}/${dir}/mask_no_nan.nii -thr 5 -uthr 5 -bin ${direc}/${dir}/tmp5.nii
-	${direc}/${dir}/mask_no_nan.nii -thr 6 -uthr 6 -bin ${direc}/${dir}/tmp6.nii
+	fslmaths ${direc}/${dir}/mask_no_nan.nii -thr 3 -uthr 3 -bin ${direc}/${dir}/tmp3.nii
+	fslmaths ${direc}/${dir}/mask_no_nan.nii -thr 4 -uthr 4 -bin ${direc}/${dir}/tmp4.nii
+	fslmaths ${direc}/${dir}/mask_no_nan.nii -thr 5 -uthr 5 -bin ${direc}/${dir}/tmp5.nii
+	fslmaths ${direc}/${dir}/mask_no_nan.nii -thr 6 -uthr 6 -bin ${direc}/${dir}/tmp6.nii
 
 	rMCP=$(fslstats ${direc}/${dir}/tmp3.nii -V | awk '{print $1}')
 	lMCP=$(fslstats ${direc}/${dir}/tmp4.nii -V | awk '{print $1}')
