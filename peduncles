@@ -28,7 +28,7 @@ for dir in $(ls $direc); do
 	rICP=$(fslstats ${direc}/${dir}/tmp5.nii -V | awk '{print $1}')
 	lICP=$(fslstats ${direc}/${dir}/tmp6.nii -V | awk '{print $1}')
 
-	echo "$rMCP\n$lMCP\n$rICP\n$lICP" >> ${direc}/${dir}/peduncles.txt
+	echo -e "$rMCP\n$lMCP\n$rICP\n$lICP" > ${direc}/${dir}/peduncles.txt
 
 	rm ${direc}/${dir}/tmp*
 
