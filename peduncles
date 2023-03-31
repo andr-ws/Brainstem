@@ -34,7 +34,7 @@ for dir in $(ls $direc); do
 	lICP=$(fslstats ${direc}/${dir}/tmp6.nii -V | awk '{print $1}')
 
 	echo -e "$lSCP\n$rSCP\n$rMCP\n$lMCP\n$rICP\n$lICP" > ${direc}/${dir}/peduncles.txt
-	echo -e "$lSCP\n$rSCP\n$rMCP\t$lMCP\t$rICP\t$lICP" >> ${out_file}
+	echo -e "$lSCP\t$rSCP\t$rMCP\t$lMCP\t$rICP\t$lICP" >> ${out_file}
 
 	rm ${direc}/${dir}/tmp*
 
