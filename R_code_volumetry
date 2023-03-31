@@ -13,25 +13,32 @@ names(demographics) <- c("sex", "group", "etiv", "age", "dis_dur")
 % Load datasets %
 
 library(readxl)
-freesurfer_brainstem_vols <- read_excel("~/Desktop/test/FS_harm.xlsx", 
+freesurfer_brainstem_vols <- read_excel("~/Desktop/CD_Volumetry/FS_harm.xlsx", 
     col_names = FALSE)
 freesurfer_brainstem_vols <- t(freesurfer_brainstem_vols)
-
 medulla <- freesurfer_brainstem_vols[,1]
 pons <- freesurfer_brainstem_vols[,2]
 scp <- freesurfer_brainstem_vols[,3]
 midbrain <- freesurfer_brainstem_vols[,4]
 brainstem <- freesurfer_brainstem_vols[,5]
 
-suit_cerebellum_vols <- read_excel("~/Desktop/test/suit_harm.xlsx", 
+suit_cerebellum_vols <- read_excel("~/Desktop/CD_Volumetry/suit_harm.xlsx", 
     col_names = FALSE)
-  suit_cerebellum_vols <- t(suit_cerebellum_vols)
+suit_cerebellum_vols <- t(suit_cerebellum_vols)
 left_dn <- suit_cerebellum_vols[,1]
 right_dn <- suit_cerebellum_vols[,2]
 
-suit_peduncle_vols <- read.table("~/
+suit_peduncle_vols <- read.table("~/Desktop/CD_Volumetry/peduncle_harm.xlsx",
+    col_names = FALSE)
+suit_peduncle_vols <- t(suit_peduncle_vols)
+rMCP <- suit_peduncle_vols[,1]
+lMCP <- suit_peduncle_vols[,2]
+rICP <- suit_peduncle_vols[,3]
+lICP <- suit_peduncle_vols[,4]
 
-regions <- list(medulla = medulla, pons = pons, scp = scp, midbrain = midbrain, brainstem = brainstem, left_dn = left_dn, right_dn = right_dn)
+regions <- list(rMCP = rMCP, lMCP = lMCP, rICP = rICP, lICP = lICP)
+
+%regions <- list(medulla = medulla, pons = pons, scp = scp, midbrain = midbrain, brainstem = brainstem, left_dn = left_dn, right_dn = right_dn)
 
 # Create an empty list to store t.test results
 t_test_results <- list()
