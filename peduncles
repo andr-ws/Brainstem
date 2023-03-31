@@ -10,7 +10,7 @@
 
 ########################################################
 
-direc=/Users/neuero-239/Desktop/SUIT_cereb
+direc=/Users/neuero-239/Desktop/CervicalDystonia/SUIT_cereb
 
 for dir in $(ls $direc/s*)
 
