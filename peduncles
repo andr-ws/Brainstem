@@ -11,6 +11,7 @@
 ########################################################
 
 direc=~/Desktop/CervicalDystonia/SUIT_cereb
+out_file=~/Desktop/CD_Volumetry/peduncle_dat.xlsx
 
 for dir in $(ls $direc); do
 
@@ -29,6 +30,7 @@ for dir in $(ls $direc); do
 	lICP=$(fslstats ${direc}/${dir}/tmp6.nii -V | awk '{print $1}')
 
 	echo -e "$rMCP\n$lMCP\n$rICP\n$lICP" > ${direc}/${dir}/peduncles.txt
+	echo -e "$rMCP\t$lMCP\t$rICP\t$lICP" >> ${out_file}
 
 	rm ${direc}/${dir}/tmp*
 
