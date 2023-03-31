@@ -18,18 +18,18 @@ for dir in $(ls $direc); do
 
 	fslmaths ${file} ${dir}/mask_no_nan.nii
 
-	${dir}/mask_no_nan.nii -thr 3 -uthr 3 -bin ${dir}/tmp3.nii
-	${dir}/mask_no_nan.nii -thr 4 -uthr 4 -bin ${dir}/tmp4.nii
-	${dir}/mask_no_nan.nii -thr 5 -uthr 5 -bin ${dir}/tmp5.nii
-	${dir}/mask_no_nan.nii -thr 6 -uthr 6 -bin ${dir}/tmp6.nii
+	${direc}/${dir}/mask_no_nan.nii -thr 3 -uthr 3 -bin ${direc}/${dir}/tmp3.nii
+	${direc}/${dir}/mask_no_nan.nii -thr 4 -uthr 4 -bin ${direc}/${dir}/tmp4.nii
+	${direc}/${dir}/mask_no_nan.nii -thr 5 -uthr 5 -bin ${direc}/${dir}/tmp5.nii
+	${direc}/${dir}/mask_no_nan.nii -thr 6 -uthr 6 -bin ${direc}/${dir}/tmp6.nii
 
-	rMCP=$(fslstats ${dir}/tmp3.nii -V | awk '{print $1}')
-	lMCP=$(fslstats ${dir}/tmp4.nii -V | awk '{print $1}')
-	rICP=$(fslstats ${dir}/tmp5.nii -V | awk '{print $1}')
-	lICP=$(fslstats ${dir}/tmp6.nii -V | awk '{print $1}')
+	rMCP=$(fslstats ${direc}/${dir}/tmp3.nii -V | awk '{print $1}')
+	lMCP=$(fslstats ${direc}/${dir}/tmp4.nii -V | awk '{print $1}')
+	rICP=$(fslstats ${direc}/${dir}/tmp5.nii -V | awk '{print $1}')
+	lICP=$(fslstats ${direc}/${dir}/tmp6.nii -V | awk '{print $1}')
 
-	echo "$rMCP\n$lMCP\n$rICP\n$lICP" >> ${dir}/peduncles.txt
+	echo "$rMCP\n$lMCP\n$rICP\n$lICP" >> ${direc}/${dir}/peduncles.txt
 
-	rm ${dir}/tmp*
+	rm ${direc}/${dir}/tmp*
 
 done
