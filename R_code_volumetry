@@ -30,7 +30,7 @@ suit_cerebellum_vols <- t(suit_cerebellum_vols)
 left_dn <- suit_cerebellum_vols[,1]
 right_dn <- suit_cerebellum_vols[,2]
 
-suit_peduncle_vols <- read.table("~/Desktop/CD_Volumetry/peduncle_harm.xlsx",
+suit_peduncle_vols <- read_excel("~/Desktop/CD_Volumetry/peduncle_harm.xlsx",
     col_names = FALSE)
 suit_peduncle_vols <- t(suit_peduncle_vols)
 rMCP <- suit_peduncle_vols[,1]
