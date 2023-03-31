@@ -16,9 +16,9 @@ for dir in $(ls $direc/s*/); do
 
 	SUB=${dir: -6}
 
-	file=iw_SUIT_1mm*.nii
+	file=${direc}/${SUB}/iw_SUIT_1mm*.nii
 
-	fslmaths $direc/${SUB}/${file} $direc/${SUB}/mask_no_nan.nii
+	fslmaths ${file} $direc/${SUB}/mask_no_nan.nii
 
 	$direc/${SUB}/mask_no_nan.nii -thr 3 -uthr 3 -bin $direc/${SUB}/tmp3.nii
 	$direc/${SUB}/mask_no_nan.nii -thr 4 -uthr 4 -bin $direc/${SUB}/tmp4.nii
