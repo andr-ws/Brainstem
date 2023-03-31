@@ -12,7 +12,7 @@
 
 direc=~/Desktop/CervicalDystonia/SUIT_cereb
 
-for dir in $(ls $direc/s*/); do
+for dir in $(ls $direc); do
 
 	SUB=${dir: -6}
 
