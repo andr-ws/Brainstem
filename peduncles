@@ -11,7 +11,7 @@
 ########################################################
 
 direc=~/Desktop/CervicalDystonia/SUIT_cereb
-out_file=~/Desktop/CD_Volumetry/peduncle_dat.xlsx
+out_file=~/Desktop/CD_Volumetry/peduncle_dat.txt
 
 for dir in $(ls $direc); do
 
