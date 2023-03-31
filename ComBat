@@ -1,11 +1,14 @@
 ComBat Code
 
 % Addpath to ComBat
-addpath(‘/Users/neuro-239/ApplicationsComBatHarmonization-master/Matlab/scripts’);
+addpath('/Users/neuro-239/ApplicationsComBatHarmonization-master/Matlab/scripts');
 
-% Assign dats as the input matrix (raw (pre-harmonised) SUIT and FS brainstem volumes)
-suit_dat = xlsread('~/Desktop/suit_dat.xlsx');
+% Assign dats as the input matrix (raw (pre-harmonised) SUIT (peduncles) and FS brainstem volumes)
+#suit_dat = xlsread('~/Desktop/suit_dat.xlsx');
+
 fs_dat = xlsread('~/Desktop/brainstem_dat.xlsx');
+
+peduncle_dat = readtable('~/Desktop .... 
 
 % Scanner vector: 1 = Phillips, 2 = GE, 3 = Siemens
 batch = [1 1 1 1 1 2 1 3 1 1 1 3 1 3 3 1 3 3 2 1 3 1 3 1 1 3 3];
