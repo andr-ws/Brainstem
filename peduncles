@@ -14,9 +14,9 @@ direc=~/Desktop/CervicalDystonia/SUIT_cereb
 
 for dir in $(ls $direc); do
 
-	file=${dir}/iw_SUIT_1mm*.nii
+	file=${direc}/${dir}/iw_SUIT_1mm*.nii
 
-	fslmaths ${file} ${dir}/mask_no_nan.nii
+	fslmaths ${file} -nan ${direc}/${dir}/mask_no_nan.nii
 
 	fslmaths ${direc}/${dir}/mask_no_nan.nii -thr 3 -uthr 3 -bin ${direc}/${dir}/tmp3.nii
 	fslmaths ${direc}/${dir}/mask_no_nan.nii -thr 4 -uthr 4 -bin ${direc}/${dir}/tmp4.nii
