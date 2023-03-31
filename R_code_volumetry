@@ -1,8 +1,11 @@
+# load libraries
+
 library(ggridges)
 library(scales)
 library(ggplot2)
+library(readxl)
 
-% Load mod matrix used in ComBaT harmonisation
+# Load mod matrix used in ComBaT harmonisation for confound corrections
 
 mod_matrix <- read_excel("~/Desktop/CD_Volumetry/Mod_matrix.xlsx", 
     col_names = FALSE)
@@ -10,9 +13,8 @@ mod_matrix <- read_excel("~/Desktop/CD_Volumetry/Mod_matrix.xlsx",
 demographics <- data.frame(sex = mod_matrix[, 1], group = mod_matrix[, 2], etiv = mod_matrix[, 3], age = mod_matrix[, 4], dis_dur = mod_matrix[, 5])
 names(demographics) <- c("sex", "group", "etiv", "age", "dis_dur")
 
-% Load datasets %
+# Load datasets
 
-library(readxl)
 freesurfer_brainstem_vols <- read_excel("~/Desktop/CD_Volumetry/FS_harm.xlsx", 
     col_names = FALSE)
 freesurfer_brainstem_vols <- t(freesurfer_brainstem_vols)
@@ -36,9 +38,11 @@ lMCP <- suit_peduncle_vols[,2]
 rICP <- suit_peduncle_vols[,3]
 lICP <- suit_peduncle_vols[,4]
 
-regions <- list(rMCP = rMCP, lMCP = lMCP, rICP = rICP, lICP = lICP)
+# regions <- list(medulla = medulla, pons = pons, scp = scp, midbrain = midbrain, brainstem = brainstem, left_dn = left_dn, right_dn = right_dn)
 
-%regions <- list(medulla = medulla, pons = pons, scp = scp, midbrain = midbrain, brainstem = brainstem, left_dn = left_dn, right_dn = right_dn)
+# Assign regions to a list
+
+regions <- list(rMCP = rMCP, lMCP = lMCP, rICP = rICP, lICP = lICP)
 
 # Create an empty list to store t.test results
 t_test_results <- list()
