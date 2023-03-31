@@ -5,7 +5,7 @@
 
 # Peduncle extraction: following processing in SUIT
 # File(s) stored as iw_SUIT_1mm*.nii
-# Labels are 3 (rMCP), 4 (lMCP), 5 (rICP), 6 (lICP)
+# Labels are 1 (lSCP), 2 (rSCP), 3 (rMCP), 4 (lMCP), 5 (rICP), 6 (lICP)
 
 
 ########################################################
@@ -19,18 +19,22 @@ for dir in $(ls $direc); do
 
 	fslmaths ${file} -nan ${direc}/${dir}/mask_no_nan.nii
 
+	fslmaths ${direc}/${dir}/mask_no_nan.nii -thr 1 -uthr 1 -bin ${direc}/${dir}/tmp1.nii
+	fslmaths ${direc}/${dir}/mask_no_nan.nii -thr 2 -uthr 2 -bin ${direc}/${dir}/tmp2.nii
 	fslmaths ${direc}/${dir}/mask_no_nan.nii -thr 3 -uthr 3 -bin ${direc}/${dir}/tmp3.nii
 	fslmaths ${direc}/${dir}/mask_no_nan.nii -thr 4 -uthr 4 -bin ${direc}/${dir}/tmp4.nii
 	fslmaths ${direc}/${dir}/mask_no_nan.nii -thr 5 -uthr 5 -bin ${direc}/${dir}/tmp5.nii
 	fslmaths ${direc}/${dir}/mask_no_nan.nii -thr 6 -uthr 6 -bin ${direc}/${dir}/tmp6.nii
 
+	lSCP=$(fslstats ${direc}/${dir}/tmp1.nii -V | awk '{print $1}')
+	rSCP=$(fslstats ${direc}/${dir}/tmp2.nii -V | awk '{print $1}')
 	rMCP=$(fslstats ${direc}/${dir}/tmp3.nii -V | awk '{print $1}')
 	lMCP=$(fslstats ${direc}/${dir}/tmp4.nii -V | awk '{print $1}')
 	rICP=$(fslstats ${direc}/${dir}/tmp5.nii -V | awk '{print $1}')
 	lICP=$(fslstats ${direc}/${dir}/tmp6.nii -V | awk '{print $1}')
 
-	echo -e "$rMCP\n$lMCP\n$rICP\n$lICP" > ${direc}/${dir}/peduncles.txt
-	echo -e "$rMCP\t$lMCP\t$rICP\t$lICP" >> ${out_file}
+	echo -e "$lSCP\n$rSCP\n$rMCP\n$lMCP\n$rICP\n$lICP" > ${direc}/${dir}/peduncles.txt
+	echo -e "$lSCP\n$rSCP\n$rMCP\t$lMCP\t$rICP\t$lICP" >> ${out_file}
 
 	rm ${direc}/${dir}/tmp*
 
