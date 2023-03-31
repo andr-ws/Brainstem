@@ -1,0 +1,37 @@
+#!/bin/bash
+
+########################################################
+
+
+# Peduncle extraction: following processing in SUIT
+# File(s) stored as iw_SUIT_1mm*.nii
+# Labels are 3 (rMCP), 4 (lMCP), 5 (rICP), 6 (lICP)
+
+
+########################################################
+
+direc=/Users/neuero-239/Desktop/SUIT_cereb
+
+for dir in $(ls $direc/s*)
+
+	SUB=${dir: -6}
+
+	file=iw_SUIT_1mm*.nii
+
+	fslmaths $direc/${SUB}/${file} $direc/${SUB}/mask_no_nan.nii
+
+	$direc/${SUB}/mask_no_nan.nii -thr 3 -uthr 3 -bin $direc/${SUB}/tmp3.nii
+	$direc/${SUB}/mask_no_nan.nii -thr 4 -uthr 4 -bin $direc/${SUB}/tmp4.nii
+	$direc/${SUB}/mask_no_nan.nii -thr 5 -uthr 5 -bin $direc/${SUB}/tmp5.nii
+	$direc/${SUB}/mask_no_nan.nii -thr 6 -uthr 6 -bin $direc/${SUB}/tmp6.nii
+
+	rMCP=$(fslstats $direc/${SUB}/tmp3.nii -V | awk '{print $1}')
+	lMCP=$(fslstats $direc/${SUB}/tmp4.nii -V | awk '{print $1}')
+	rICP=$(fslstats $direc/${SUB}/tmp5.nii -V | awk '{print $1}')
+	lICP=$(fslstats $direc/${SUB}/tmp6.nii -V | awk '{print $1}')
+
+	echo "$rMCP\n$lMCP\n$rICP\n$lICP" >> $direc/${SUB}/peduncles.txt
+
+	rm $direc/${SUB}/tmp*
+
+done
