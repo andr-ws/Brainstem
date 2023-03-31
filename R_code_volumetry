@@ -33,16 +33,18 @@ right_dn <- suit_cerebellum_vols[,2]
 suit_peduncle_vols <- read_excel("~/Desktop/CD_Volumetry/peduncle_harm.xlsx",
     col_names = FALSE)
 suit_peduncle_vols <- t(suit_peduncle_vols)
-rMCP <- suit_peduncle_vols[,1]
-lMCP <- suit_peduncle_vols[,2]
-rICP <- suit_peduncle_vols[,3]
-lICP <- suit_peduncle_vols[,4]
+lSCP <- suit_peduncle_vols[,1]
+rSCP <- suit_peduncle_vols[,2]
+rMCP <- suit_peduncle_vols[,3]
+lMCP <- suit_peduncle_vols[,4]
+rICP <- suit_peduncle_vols[,5]
+lICP <- suit_peduncle_vols[,6]
 
 # regions <- list(medulla = medulla, pons = pons, scp = scp, midbrain = midbrain, brainstem = brainstem, left_dn = left_dn, right_dn = right_dn)
 
 # Assign regions to a list
 
-regions <- list(rMCP = rMCP, lMCP = lMCP, rICP = rICP, lICP = lICP)
+regions <- list(lSCP = lSCP, rSCP = rSCP, rMCP = rMCP, lMCP = lMCP, rICP = rICP, lICP = lICP)
 
 # Create an empty list to store t.test results
 t_test_results <- list()
