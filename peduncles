@@ -10,9 +10,9 @@
 
 ########################################################
 
-direc=/Users/neuero-239/Desktop/CervicalDystonia/SUIT_cereb
+direc=~/Desktop/CervicalDystonia/SUIT_cereb
 
-for dir in $(ls $direc/s*)
+for dir in $(ls $direc/s*); do
 
 	SUB=${dir: -6}
 
