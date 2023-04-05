@@ -60,9 +60,9 @@ for (i in seq_along(correc_regions)) {
 
   logit_model <- glm(outcome ~ correc_regions[[i]], data = correc_regions, family = binomial)
   
-  predicted_scores[i] <- predict(logit_model, newdata = logit_regions[i], type = "response")
+  predicted_scores[[i]] <- predict(logit_model, newdata = logit_regions[i], type = "response")
   
-  roc_objs[i] <- roc(outcome, predicted_scores)
+  roc_objs[[i]] <- roc(outcome, predicted_scores)
  
 }
  
