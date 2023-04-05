@@ -1,5 +1,7 @@
 # Code for an AUC/ROC analysis of brainstem regions
 
+library(pROC)
+
 # Will need to use the corrected values (following linear model confound correction) from regions identified as sig following correction
 
 # sig_regions: pons, brainstem, lSCP, rSCP, lMCP, rMCP
@@ -21,7 +23,7 @@ rMCP_c <- bstem_peduncle_vols[,9]
 regions_c <- list(pons_c = pons_c, bstem_c = bstem_c, lSCP_c = lSCP_c
 correc_regions <- list()
 
-# Binary group assigner (0 = SO)
+# Class labels (0 = SO)
 outcome <- c(0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1)
 
 for (i in seq_along(regions_c)) {
@@ -36,4 +38,25 @@ for (i in seq_along(regions_c)) {
   
   correc_regions[[i]] <- y + region_resid
   
- }
+}
+
+roc_objs <- list()
+auc_vals <- vector("numeric", length(correc_regions))
+
+for (i in seq along(correc_regions)) {
+ 
+ roc_reg <- roc(x = outcome, y = correc_regions[[i]])
+ auc_val <- auc(roc_reg)
+ roc_objs[[i]] <- roc_reg
+ auc_vals[i] <- auc_val
+ 
+}
+
+plot(roc_objs[[1]], col = "red", print.thres = "best", main = "ROC Curves and AUC Values for Different Regions")
+for (i in 2:length(roc_objs)) {
+  plot(roc_objs[[i]], col = i+1, add = TRUE, print.thres = FALSE)
+}
+
+legend("bottomright", legend = c("pons_c", "bstem_c", "lSCP_c", "rSCP_c", "lMCP_c", "rMCP_c"), 
+       col = 1:length(roc_objs)+1, lwd = 2, cex = 0.8)
+ 
