@@ -13,14 +13,14 @@ names(demographics) <- c("sex", "group", "age", "dis_dur")
 bstem_peduncle_vols <- read_excel("~/Desktop/CD_Volumetry/bstem_peduncle_harm.xlsx", col_names = FALSE)
 dat <- t(bstem_peduncle_vols)
 
-pons_c <- bstem_peduncle_vols[,2]
-bstem_c <- bstem_peduncle_vols[,5]
-lSCP_c <- bstem_peduncle_vols[,6]
-rSCP_c <- bstem_peduncle_vols[,7]
-lMCP_c <- bstem_peduncle_vols[,8]
-rMCP_c <- bstem_peduncle_vols[,9]
+pons_c <- dat[,2]
+bstem_c <- dat[,5]
+lSCP_c <- dat[,6]
+rSCP_c <- dat[,7]
+lMCP_c <- dat[,8]
+rMCP_c <- dat[,9]
 
-regions_c <- list(pons_c = pons_c, bstem_c = bstem_c, lSCP_c = lSCP_c
+regions_c <- list(pons_c = pons_c, bstem_c = bstem_c, lSCP_c = lSCP_c, rSCP = rSCP, lMCP = lMCP, rMCP = rMCP)
 correc_regions <- list()
 
 # Class labels (0 = SO)
