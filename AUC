@@ -62,7 +62,19 @@ for (i in seq_along(correc_regions)) {
   
   predicted_scores[[i]] <- predict(logit_model, newdata = logit_regions[i], type = "response")
   
-  roc_objs[[i]] <- roc(outcome, predicted_scores)
+  roc_objs[[i]] <- roc(outcome, predicted_scores[[i]])
  
 }
+
+# Create an empty plot
+plot(0, 0, type = "n", xlim = c(0, 1), ylim = c(0, 1), xlab = "False Positive Rate", ylab = "True Positive Rate", main = "ROC Curves")
+
+# Loop through the list of ROC objects and plot each curve
+for (i in seq_along(roc_objs)) {
+  lines(roc_objs[[i]], col = i)
+}
+
+# Add a legend to the plot
+legend("bottomright", legend = names(roc_objs), col = 1:length(roc_objs), lwd = 2)
+
  
