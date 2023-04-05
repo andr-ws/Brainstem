@@ -19,6 +19,10 @@ lMCP_c <- bstem_peduncle_vols[,8]
 rMCP_c <- bstem_peduncle_vols[,9]
 
 regions_c <- list(pons_c = pons_c, bstem_c = bstem_c, lSCP_c = lSCP_c
+correc_regions <- list()
+
+# Binary group assigner (0 = SO)
+outcome <- c(0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1)
 
 for (i in seq_along(regions_c)) {
   y <- regions_c[[i]]
@@ -30,6 +34,6 @@ for (i in seq_along(regions_c)) {
   
   region_resid <- region_model$residuals
   
-  correc_region <- y + region_resid
+  correc_regions[[i]] <- y + region_resid
   
  }
