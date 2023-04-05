@@ -43,9 +43,9 @@ for (i in seq_along(regions_c)) {
 roc_objs <- list()
 auc_vals <- vector("numeric", length(correc_regions))
 
-for (i in seq along(correc_regions)) {
+for (i in seq_along(correc_regions)) {
  
- roc_reg <- roc(x = outcome, y = correc_regions[[i]])
+ #### roc_reg <- roc(outcome , correc_regions[[i]])
  auc_val <- auc(roc_reg)
  roc_objs[[i]] <- roc_reg
  auc_vals[i] <- auc_val
