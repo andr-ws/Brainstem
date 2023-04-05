@@ -40,13 +40,15 @@ for (i in seq_along(regions_c)) {
   
 }
 
-# assuming your dataset is stored in a data frame called "mydata"
-# and the target variable is called "target"
-# and the predictors are stored in a data frame called "predictors"
+# additional columns
 
-# fit logistic regression model on the training data
+# left and right scp
+correc_regions[[7]] <- correc_regions[[3]] + correc_regions[[4]]
 
-# obtain predicted scores for the test data
+# left and right mcp
+correc_regions[[8]] <- correc_regions[[5]] + correc_regions[[6]]
+
+# fit logistic models
 
 roc_objs <- list()
 
@@ -63,12 +65,4 @@ for (i in seq_along(correc_regions)) {
   roc_objs[i] <- roc(outcome, predicted_scores)
  
 }
-
-plot(roc_objs[[1]], col = "red", print.thres = "best", main = "ROC Curves and AUC Values for Different Regions")
-for (i in 2:length(roc_objs)) {
-  plot(roc_objs[[i]], col = i+1, add = TRUE, print.thres = FALSE)
-}
-
-legend("bottomright", legend = c("pons_c", "bstem_c", "lSCP_c", "rSCP_c", "lMCP_c", "rMCP_c"), 
-       col = 1:length(roc_objs)+1, lwd = 2, cex = 0.8)
  
