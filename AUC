@@ -40,15 +40,27 @@ for (i in seq_along(regions_c)) {
   
 }
 
+# assuming your dataset is stored in a data frame called "mydata"
+# and the target variable is called "target"
+# and the predictors are stored in a data frame called "predictors"
+
+# fit logistic regression model on the training data
+
+# obtain predicted scores for the test data
+
 roc_objs <- list()
-auc_vals <- vector("numeric", length(correc_regions))
+
+logit_regions <- list()
+
+predicted_scores <- list()
 
 for (i in seq_along(correc_regions)) {
- 
- #### roc_reg <- roc(outcome , correc_regions[[i]])
- auc_val <- auc(roc_reg)
- roc_objs[[i]] <- roc_reg
- auc_vals[i] <- auc_val
+
+  logit_model <- glm(outcome ~ correc_regions[[i]], data = correc_regions, family = binomial)
+  
+  predicted_scores[i] <- predict(logit_model, newdata = logit_regions[i], type = "response")
+  
+  roc_objs[i] <- roc(outcome, predicted_scores)
  
 }
 
