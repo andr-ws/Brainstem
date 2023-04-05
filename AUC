@@ -30,6 +30,6 @@ for (i in seq_along(regions_c)) {
   
   region_resid <- region_model$residuals
   
-  correc_region <- y + resid
+  correc_region <- y + region_resid
   
  }
