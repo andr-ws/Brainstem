@@ -84,17 +84,19 @@ legend("left", legend = legend_text, col = 1:length(labels), lty = 1, cex = 0.8)
 ######## Brainstem Nuclei ROC Plot
 labels <- c("Pons", "Brainstem")
 plot(0, 0, type = "n", xlim = c(0, 1), ylim = c(0, 1), xlab = "False Positive Rate", ylab = "True Positive Rate", main = "ROC Curves")
+grid()
 auc_values <- c()
 roc_objs_bstem <- roc_objs[c(1, 2)]
 
 for (i in seq_along(roc_objs_bstem)) {
-  lines(roc_objs_bstem[[i]], col = i)
+  col = i + 1 # iterate line colours
+  lty = i + 1 # iterate line styles
+  lines(roc_objs_bstem[[i]], col = col, lty =lty)
   auc_values[i] <- auc(roc_objs_bstem[[i]])
 }
 # Create a legend with AUC values
 legend_text <- paste(labels, " (AUC = ", round(auc_values, 2), ")", sep="")
 legend("bottomleft", legend = legend_text, col = 1:length(labels), lty = 1, cex = 0.8)
-
 
 
 
