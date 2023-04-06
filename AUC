@@ -66,19 +66,38 @@ for (i in seq_along(correc_regions)) {
  
 }
 
+######## Combined ROC Plot
+labels <- c("Pons", "Brainstem", "Left SCP", "Right SCP", "Left MCP", "Right MCP", "SCP", "MCP")
 # Create an empty plot
 plot(0, 0, type = "n", xlim = c(0, 1), ylim = c(0, 1), xlab = "False Positive Rate", ylab = "True Positive Rate", main = "ROC Curves")
-
 # Loop through the list of ROC objects and plot each curve
 auc_values <- c()
 for (i in seq_along(roc_objs)) {
   lines(roc_objs[[i]], col = i)
   auc_values[i] <- auc(roc_objs[[i]])
 }
-
 # Create a legend with AUC values
 legend_text <- paste(labels, " (AUC = ", round(auc_values, 2), ")", sep="")
 legend("bottomright", legend = legend_text, col = 1:length(labels), lty = 1, cex = 0.8)
+
+
+######## Brainstem Nuclei ROC Plot
+labels <- c("Pons", "Brainstem")
+plot(0, 0, type = "n", xlim = c(0, 1), ylim = c(0, 1), xlab = "False Positive Rate", ylab = "True Positive Rate", main = "ROC Curves")
+auc_values <- c()
+roc_objs_bstem <- roc_objs[c(1, 2)]
+
+for (i in seq_along(roc_objs_bstem)) {
+  lines(roc_objs_bstem[[i]], col = i)
+  auc_values[i] <- auc(roc_objs_bstem[[i]])
+}
+# Create a legend with AUC values
+legend_text <- paste(labels, " (AUC = ", round(auc_values, 2), ")", sep="")
+legend("bottomright", legend = legend_text, col = 1:length(labels), lty = 1, cex = 0.8)
+
+
+
+
 
 
 
