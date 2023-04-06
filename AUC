@@ -96,7 +96,9 @@ for (i in seq_along(roc_objs_bstem)) {
 }
 # Create a legend with AUC values
 legend_text <- paste(labels, " (AUC = ", round(auc_values, 2), ")", sep="")
-legend("bottomleft", legend = legend_text, col = 1:length(labels), lty = 1, cex = 1.2, lwd = 2)
+legend("bottomleft", legend = legend_text, col = 2:(length(roc_objs_bstem) + 1), lty = 2:(length(roc_objs_bstem) + 1), cex = 1.2, lwd = 2)
+
+#legend("bottomleft", legend = legend_text, col = 1:length(labels), lty = 1, cex = 1.2, lwd = 2)
 
 
 
