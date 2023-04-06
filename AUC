@@ -83,7 +83,7 @@ legend("bottomright", legend = legend_text, col = 1:length(labels), lty = 1, cex
 
 ######## Brainstem Nuclei ROC Plot
 labels <- c("Pons", "Brainstem")
-plot(0, 0, type = "n", xlim = c(0, 1), ylim = c(0, 1), xlab = "False Positive Rate", ylab = "True Positive Rate", main = "ROC Curves")
+plot(0, 0, type = "n", xlim = c(1, ), ylim = c(1, 0), xlab = "False Positive Rate", ylab = "True Positive Rate", main = "ROC Curves")
 auc_values <- c()
 roc_objs_bstem <- roc_objs[c(1, 2)]
 
