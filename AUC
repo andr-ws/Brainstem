@@ -128,5 +128,5 @@ for (i in seq_along(roc_objs_ped)) {
 # Create a legend with AUC values
 auc_values_ped <- sapply(roc_objs_ped, function(x) x$auc)
 
-legend_text_ped <- paste(labels_ped, " (AUC = ", round(auc_values, 2), ")", sep="")
+legend_text_ped <- paste(labels_ped, " (AUC = ", round(auc_values_ped, 2), ")", sep="")
 legend("bottomleft", legend = legend_text_ped, col = 1:length(roc_objs_ped) + 1, cex = 0.8, lwd = 1.6)
