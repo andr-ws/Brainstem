@@ -117,16 +117,17 @@ auc_values_ped <- c()
 # Subset the peduncles
 roc_objs_ped <- roc_objs[c(3, 4, 5, 6, 7, 8)]
 
-# What colours do i want?
-# Random colour, random style?
+# colours for peduncles
+
+cols_ped <- c("red", "green", "blue", "yellow", "orange", "purple", "black")
 
 for (i in seq_along(roc_objs_ped)) {
   col = col + 1
-  lines(roc_objs_ped[[i]], col = col)
+  lines(roc_objs_ped[[i]], col = cols_ped[i])
 }
 
 # Create a legend with AUC values
 auc_values_ped <- sapply(roc_objs_ped, function(x) x$auc)
 
 legend_text_ped <- paste(labels_ped, " (AUC = ", round(auc_values_ped, 2), ")", sep="")
-legend("bottomleft", legend = legend_text_ped, col = 1:length(roc_objs_ped) + 1, cex = 0.8, lwd = 1.6)
+legend("bottomleft", legend = legend_text_ped, col = cols_ped, cex = 0.8, lwd = 1.6)
