@@ -7,7 +7,7 @@ library(readxl)
 
 # Load mod matrix used in ComBaT harmonisation for confound corrections
 
-mod_matrix <- read_excel("~/Desktop/CD_Volumetry/Mod_matrix.xlsx", 
+mod_matrix <- read_excel("~/Desktop/CD_Volumetry/Mod_matrix_motor_score.xlsx", 
     col_names = FALSE)
 
 demographics <- data.frame(sex = mod_matrix[, 1], group = mod_matrix[, 2], etiv = mod_matrix[, 3], age = mod_matrix[, 4], dis_dur = mod_matrix[, 5])
@@ -15,22 +15,16 @@ names(demographics) <- c("sex", "group", "etiv", "age", "dis_dur")
 
 # Load datasets
 
-freesurfer_brainstem_vols <- read_excel("~/Desktop/CD_Volumetry/FS_harm.xlsx", 
+freesurfer_brainstem_vols <- read_excel("~/Desktop/CD_Volumetry/fs_bstem_harm_motor_score.xlsx", 
     col_names = FALSE)
 freesurfer_brainstem_vols <- t(freesurfer_brainstem_vols)
 medulla <- freesurfer_brainstem_vols[,1]
 pons <- freesurfer_brainstem_vols[,2]
-scp <- freesurfer_brainstem_vols[,3]
+# Exclude SCP as extracting from below
 midbrain <- freesurfer_brainstem_vols[,4]
 brainstem <- freesurfer_brainstem_vols[,5]
 
-suit_cerebellum_vols <- read_excel("~/Desktop/CD_Volumetry/suit_harm.xlsx", 
-    col_names = FALSE)
-suit_cerebellum_vols <- t(suit_cerebellum_vols)
-left_dn <- suit_cerebellum_vols[,1]
-right_dn <- suit_cerebellum_vols[,2]
-
-suit_peduncle_vols <- read_excel("~/Desktop/CD_Volumetry/peduncle_harm.xlsx",
+suit_peduncle_vols <- read_excel("~/Desktop/CD_Volumetry/peduncle_harm_motor_score.xlsx",
     col_names = FALSE)
 suit_peduncle_vols <- t(suit_peduncle_vols)
 lSCP <- suit_peduncle_vols[,1]
@@ -40,11 +34,8 @@ lMCP <- suit_peduncle_vols[,4]
 rICP <- suit_peduncle_vols[,5]
 lICP <- suit_peduncle_vols[,6]
 
-# regions <- list(medulla = medulla, pons = pons, scp = scp, midbrain = midbrain, brainstem = brainstem, left_dn = left_dn, right_dn = right_dn)
-
 # Assign regions to a list
-
-regions <- list(lSCP = lSCP, rSCP = rSCP, rMCP = rMCP, lMCP = lMCP, rICP = rICP, lICP = lICP)
+regions <- list(medulla = medulla, pons = pons, midbrain = midbrain, brainstem = brainstem, lSCP = lSCP, rSCP = rSCP, rMCP = rMCP, lMCP = lMCP, rICP = rICP, lICP = lICP)
 
 # Create an empty list to store t.test results
 t_test_results <- list()
@@ -105,6 +96,6 @@ for (i in seq_along(regions)) {
      labs(title = paste("Brain region:", names(regions)[i])) + # Add title
      theme(plot.title = element_text(hjust = 0.5)) # Center title
 
-    ggsave(paste0("~/Desktop/", names(regions)[i], ".png"), plot = last_plot(), width = 6, height = 4, dpi = 600, device = "png")
+    ggsave(paste0("~/Desktop/CD_Volumetry", names(regions)[i], ".png"), plot = last_plot(), width = 6, height = 4, dpi = 600, device = "png")
 
 }
