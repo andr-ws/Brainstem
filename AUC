@@ -6,11 +6,11 @@ library(pROC)
 
 # sig_regions: pons, brainstem, lSCP, rSCP, lMCP, rMCP
 
-mod_matrix <- read_excel("~/Desktop/CD_Volumetry/Mod_matrix.xlsx", col_names = FALSE)
+mod_matrix <- read_excel("~/Desktop/CD_Volumetry/Mod_matrix_motor_score.xlsx", col_names = FALSE)
 demographics <- data.frame(sex = mod_matrix[, 1], group = mod_matrix[, 2], etiv = mod_matrix[, 3], age = mod_matrix[, 4], dis_dur = mod_matrix[, 5])
 names(demographics) <- c("sex", "group", "age", "dis_dur")
 
-bstem_peduncle_vols <- read_excel("~/Desktop/CD_Volumetry/bstem_peduncle_harm.xlsx", col_names = FALSE)
+bstem_peduncle_vols <- read_excel("~/Desktop/CD_Volumetry/bstem_peduncle_harm_motor_score.xlsx", col_names = FALSE)
 dat <- t(bstem_peduncle_vols)
 
 pons_c <- dat[,2]
