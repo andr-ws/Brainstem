@@ -4,7 +4,7 @@
 
 % copy the files from SynthSR to SUIT and call them t1.nii
 
-mainDir = '/Users/neuro-239/Desktop/HCP_Analysis';
+mainDir = '/Users/neuro-239/Desktop/CD_Morph';
 addpath('/Applications/spm12/toolbox/suit/');
 
 dirPattern = 'sub*'
@@ -69,4 +69,14 @@ for i = 1:numel(N)
 
 	dlmwrite(fullfile(mainDir, N{i}, 'lobule_vols.txt'), vols.vmm, 'delimiter', '\n');
 
+seg1 = dir(fullfile(mainDir, N{i}, t1_seg1.nii));
+seg1_file = fullfile(mainDir, N{i}, seg1.name);
+
+	job.resample={seg1_file};
+	job.jactransf=1;
+	
+	suit_reslice_dartel(job);
+	
 end
+
+
