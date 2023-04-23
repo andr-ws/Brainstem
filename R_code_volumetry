@@ -7,16 +7,14 @@ library(readxl)
 
 # Load mod matrix used in ComBaT harmonisation for confound corrections
 
-mod_matrix <- read_excel("~/Desktop/CD_Volumetry/Mod_matrix_motor_score.xlsx", 
-    col_names = FALSE)
+mod_matrix <- read_excel("~/Desktop/CD_Volumetry/26/Mod_matrix_motor_score_26.xlsx", col_names = FALSE)
 
 demographics <- data.frame(sex = mod_matrix[, 1], group = mod_matrix[, 2], etiv = mod_matrix[, 3], age = mod_matrix[, 4], dis_dur = mod_matrix[, 5])
 names(demographics) <- c("sex", "group", "etiv", "age", "dis_dur")
 
 # Load datasets
 
-freesurfer_brainstem_vols <- read_excel("~/Desktop/CD_Volumetry/fs_bstem_harm_motor_score.xlsx", 
-    col_names = FALSE)
+freesurfer_brainstem_vols <- read_excel("~/Desktop/CD_Volumetry/26/fs_bstem_26_harm.xlsx",col_names = FALSE)
 freesurfer_brainstem_vols <- t(freesurfer_brainstem_vols)
 medulla <- freesurfer_brainstem_vols[,1]
 pons <- freesurfer_brainstem_vols[,2]
@@ -24,8 +22,7 @@ pons <- freesurfer_brainstem_vols[,2]
 midbrain <- freesurfer_brainstem_vols[,4]
 brainstem <- freesurfer_brainstem_vols[,5]
 
-suit_peduncle_vols <- read_excel("~/Desktop/CD_Volumetry/peduncle_harm_motor_score.xlsx",
-    col_names = FALSE)
+suit_peduncle_vols <- read_excel("~/Desktop/CD_Volumetry/26/peduncle_26_harm.xlsx", col_names = FALSE)
 suit_peduncle_vols <- t(suit_peduncle_vols)
 lSCP <- suit_peduncle_vols[,1]
 rSCP <- suit_peduncle_vols[,2]
@@ -52,8 +49,8 @@ for (i in seq_along(regions)) {
 
   cor_region <- y + resid
 
-  non_resp <- cor_region[c(1,2,3,4,8,9,11,12,13,15,19,23,24,26)]
-  resp <- cor_region[c(5,6,7,10,14,16,17,18,20,21,22,25,27)]
+  non_resp <- cor_region[c(2,3,4,11,12,14,15,17,18,22,23,25)]
+  resp <- cor_region[c(1,5,6,7,8,9,10,13,16,19,20,21,24,26)]
 
   if (!is.matrix(model$residuals)) {
   model$residuals <- as.matrix(model$residuals)
