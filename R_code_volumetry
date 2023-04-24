@@ -9,7 +9,7 @@ library(readxl)
 
 demo <- read_excel("~/Desktop/CD_Volumetry/>66/R_demographics.xlsx", col_names = FALSE)
 
-demographics <- data.frame(sex = mod_matrix[, 1], group = mod_matrix[, 2], etiv = mod_matrix[, 3], age = mod_matrix[, 4], ysi = mod_matrix[, 5])
+demographics <- data.frame(sex = demo[, 1], group = demo[, 2], etiv = demo[, 3], age = demo[, 4], ysi = demo[, 5])
 names(demographics) <- c("sex", "group", "etiv", "age", "ysi")
 
 # Load datasets
