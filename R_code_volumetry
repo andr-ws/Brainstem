@@ -7,14 +7,14 @@ library(readxl)
 
 # Load ammended mod matrix used in ComBaT harmonisation for confound corrections
 
-demo <- read_excel("~/Desktop/CD_Volumetry/26/Mod_matrix_motor_score_26_git.xlsx", col_names = FALSE)
+demo <- read_excel("~/Desktop/CD_Volumetry/Mod_matrix_motor_score.xlsx", col_names = FALSE)
 
 demographics <- data.frame(sex = demo[, 1], group = demo[, 2], etiv = demo[, 3], age = demo[, 4], ysi = demo[, 5])
 names(demographics) <- c("sex", "group", "etiv", "age", "ysi")
 
 # Load datasets
 
-freesurfer_brainstem_vols <- read_excel("~/Desktop/CD_Volumetry/26/bstem_git.xlsx",col_names = FALSE)
+freesurfer_brainstem_vols <- read_excel("~/Desktop/CD_Volumetry/All_27_latest_bstem.xlsx",col_names = FALSE)
 freesurfer_brainstem_vols <- t(freesurfer_brainstem_vols)
 medulla <- freesurfer_brainstem_vols[,1]
 pons <- freesurfer_brainstem_vols[,2]
@@ -22,7 +22,7 @@ pons <- freesurfer_brainstem_vols[,2]
 midbrain <- freesurfer_brainstem_vols[,4]
 brainstem <- freesurfer_brainstem_vols[,5]
 
-suit_peduncle_vols <- read_excel("~/Desktop/CD_Volumetry/26/ped_git.xlsx", col_names = FALSE)
+suit_peduncle_vols <- read_excel("~/Desktop/CD_Volumetry/All_27_latest_ped.xlsx", col_names = FALSE)
 suit_peduncle_vols <- t(suit_peduncle_vols)
 lSCP <- suit_peduncle_vols[,1]
 rSCP <- suit_peduncle_vols[,2]
