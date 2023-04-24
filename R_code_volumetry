@@ -18,9 +18,9 @@ freesurfer_brainstem_vols <- read_excel("~/Desktop/CD_Volumetry/All_27_latest_bs
 freesurfer_brainstem_vols <- t(freesurfer_brainstem_vols)
 medulla <- freesurfer_brainstem_vols[,1]
 pons <- freesurfer_brainstem_vols[,2]
-# Exclude SCP as extracting from below
-midbrain <- freesurfer_brainstem_vols[,4]
-brainstem <- freesurfer_brainstem_vols[,5]
+# Excluded SCP as extracting from SUIT
+midbrain <- freesurfer_brainstem_vols[,3]
+brainstem <- freesurfer_brainstem_vols[,4]
 
 suit_peduncle_vols <- read_excel("~/Desktop/CD_Volumetry/All_27_latest_ped.xlsx", col_names = FALSE)
 suit_peduncle_vols <- t(suit_peduncle_vols)
