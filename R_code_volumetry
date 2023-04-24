@@ -43,7 +43,7 @@ for (i in seq_along(regions)) {
   data <- t(t(data))
   data <- as.data.frame(data)
 
-  model <- lm(y ~ sex + etiv + age + dis_dur, data = data) # confound-only model; variability I want to remove.
+  model <- lm(y ~ sex + etiv + age + ysi, data = data) # confound-only model; variability I want to remove.
 
   resid <- model$residuals
 
