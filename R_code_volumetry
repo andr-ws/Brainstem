@@ -14,7 +14,7 @@ names(demographics) <- c("sex", "group", "etiv", "age", "ysi")
 
 # Load datasets
 
-freesurfer_brainstem_vols <- read_excel("~/Desktop/CD_Volumetry/All_27_latest_bstem.xlsx",col_names = FALSE)
+freesurfer_brainstem_vols <- read_excel("~/Desktop/CD_Volumetry/All_27_latest_fs.xlsx",col_names = FALSE)
 freesurfer_brainstem_vols <- t(freesurfer_brainstem_vols)
 medulla <- freesurfer_brainstem_vols[,1]
 pons <- freesurfer_brainstem_vols[,2]
