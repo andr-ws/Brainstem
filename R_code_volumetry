@@ -7,29 +7,30 @@ library(readxl)
 
 # Load ammended mod matrix used in ComBaT harmonisation for confound corrections
 
-demo <- read_excel("~/Desktop/CD_Volumetry/Mod_matrix_motor_score.xlsx", col_names = FALSE)
+demo <- read_excel("~/Desktop/mod_matrix_harm.xlsx", col_names = FALSE)
 
-demographics <- data.frame(sex = demo[, 1], group = demo[, 2], etiv = demo[, 3], age = demo[, 4], ysi = demo[, 5])
-names(demographics) <- c("sex", "group", "etiv", "age", "ysi")
+# We ignore response group here.
+
+demographics <- data.frame(age = demo[, 1], disdur = demo[, 2], etiv = demo[, 3], sex = demo[, 4], ysi = demo[, 6])
+names(demographics) <- c("age", "disdur", "etiv", "sex", "ysi")
 
 # Load datasets
 
-freesurfer_brainstem_vols <- read_excel("~/Desktop/CD_Volumetry/All_27_latest_fs.xlsx",col_names = FALSE)
-freesurfer_brainstem_vols <- t(freesurfer_brainstem_vols)
-medulla <- freesurfer_brainstem_vols[,1]
-pons <- freesurfer_brainstem_vols[,2]
-# Excluded SCP as extracting from SUIT
-midbrain <- freesurfer_brainstem_vols[,3]
-brainstem <- freesurfer_brainstem_vols[,4]
+df <- read_excel("~/Desktop/ped_fslstat_fs_harm.xlsx", col_names = F)
+data <- t(df)
 
-suit_peduncle_vols <- read_excel("~/Desktop/CD_Volumetry/All_27_latest_ped.xlsx", col_names = FALSE)
-suit_peduncle_vols <- t(suit_peduncle_vols)
-lSCP <- suit_peduncle_vols[,1]
-rSCP <- suit_peduncle_vols[,2]
-rMCP <- suit_peduncle_vols[,3]
-lMCP <- suit_peduncle_vols[,4]
-rICP <- suit_peduncle_vols[,5]
-lICP <- suit_peduncle_vols[,6]
+peduncles first, brainstem (firstseg), brainstem nulcei (fs)
+
+lSCP <- data[,1]
+rSCP <- data[,2]
+rMCP <- data[,3]
+lMCP <- data[,4]
+rICP <- data[,5]
+lICP <- data[,6]
+brainstem <- data[,7]
+medulla <- data[,8]
+pons <- data[,9]
+midbrain <- data[,10]
 
 # Assign regions to a list
 regions <- list(medulla = medulla, pons = pons, midbrain = midbrain, brainstem = brainstem, lSCP = lSCP, rSCP = rSCP, rMCP = rMCP, lMCP = lMCP, rICP = rICP, lICP = lICP)
