@@ -97,3 +97,6 @@ for (i in seq_along(regions)) {
     ggsave(paste0("~/Desktop/CD_Volumetry", names(regions)[i], ".png"), plot = last_plot(), width = 6, height = 4, dpi = 600, device = "png")
 
 }
+
+peduncle_p <- sapply(t_test_results[1:6], function(x) x$p.value)
+brainstem_p <- sapply(t_test_results[7:10], function(x) x$p.value)
