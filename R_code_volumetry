@@ -100,3 +100,5 @@ for (i in seq_along(regions)) {
 
 peduncle_p <- sapply(t_test_results[1:6], function(x) x$p.value)
 brainstem_p <- sapply(t_test_results[7:10], function(x) x$p.value)
+ped_p_correc <- p.adjust(peduncle_p, method = "bonferroni")
+brainstem_p_correc <- p.adjust(brainstem_p, method = "bonferroni")
