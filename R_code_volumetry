@@ -11,8 +11,8 @@ demo <- read_excel("~/Desktop/mod_matrix_harm.xlsx", col_names = FALSE)
 
 # We ignore response group here.
 
-demographics <- data.frame(age = demo[, 1], disdur = demo[, 2], etiv = demo[, 3], sex = demo[, 4], ysi = demo[, 6])
-names(demographics) <- c("age", "disdur", "etiv", "sex", "ysi")
+demographics <- data.frame(age = demo[, 1], disdur = demo[, 2], etiv = demo[, 3], sex = demo[, 4])
+names(demographics) <- c("age", "disdur", "etiv", "sex")
 
 # Load datasets
 
