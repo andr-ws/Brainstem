@@ -44,13 +44,13 @@ for (i in seq_along(regions)) {
   data <- t(t(data))
   data <- as.data.frame(data)
 
-  model <- lm(y ~ age + disdur + etiv + sex + ysi, data = data) # confound-only model; variability I want to remove.
+  model <- lm(y ~ age + disdur + etiv + sex, data = data) # confound-only model; variability I want to remove.
   
   resid <- model$residuals
 
   cor_region <- y + resid
 
-  non_resp <- cor_region[c(2,3,4,11,12,14,15,17,18,22,23,25)]
+  non_resp <- cor_region[c(1,2,3,4,11,12,14,15,17,18,22,23,25)]
   resp <- cor_region[c(5,6,7,8,9,10,13,16,19,20,21,24,26)]
 
   if (!is.matrix(model$residuals)) {
