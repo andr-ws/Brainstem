@@ -16,7 +16,7 @@ names(demographics) <- c("age", "disdur", "etiv", "sex")
 
 # Load datasets
 
-df <- read_excel("~/Desktop/ped_fslstat_fs_harm.xlsx", col_names = F)
+df <- read_excel("~/Desktop/ped_fs_harm.xlsx", col_names = F)
 data <- t(df)
 
 peduncles first, brainstem (firstseg), brainstem nulcei (fs)
