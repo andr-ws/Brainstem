@@ -27,13 +27,13 @@ rMCP <- data[,3]
 lMCP <- data[,4]
 rICP <- data[,5]
 lICP <- data[,6]
-brainstem <- data[,7]
-medulla <- data[,8]
-pons <- data[,9]
-midbrain <- data[,10]
+medulla <- data[,7]
+pons <- data[,8]
+midbrain <- data[,9]
+brainstem <- data[,10]
 
 # Assign regions to a list
-regions <- list(lSCP = lSCP, rSCP = rSCP, rMCP = rMCP, lMCP = lMCP, rICP = rICP, lICP = lICP, brainstem = brainstem, medulla = medulla, pons = pons, midbrain = midbrain)
+regions <- list(lSCP = lSCP, rSCP = rSCP, rMCP = rMCP, lMCP = lMCP, rICP = rICP, lICP = lICP, medulla = medulla, pons = pons, midbrain = midbrain, brainstem = brainstem)
 
 # Create an empty list to store t.test results
 t_test_results <- list()
