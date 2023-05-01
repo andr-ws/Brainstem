@@ -6,47 +6,23 @@ addpath('/Applications/ComBatHarmonization-master/Matlab/scripts');
 % Assign dats as the input matrix (raw (pre-harmonised) SUIT (peduncles) and FS brainstem volumes)
 #suit_dat = xlsread('~/Desktop/CD_Volumetry/suit_dat.xlsx');
 
-fs_dat = xlsread('~/Desktop/CD_Volumetry/brainstem_dat.xlsx');
-
-peduncle_dat = importdata('~/Desktop/CD_Volumetry/peduncle_dat.txt');
-peduncle_dat = peduncle_dat'
-
-dat = horzcat(fs_dat, peduncle_dat);
-
-dat = dat'
+dat = xlsread('~/Desktop/ped_fs_dat.xlsx');
 
 % Scanner vector: 1 = Phillips, 2 = Siemens
-batch = [1	1	1	1	1	1	1	2	1	1	1	2	2	2	2	1	2	2	1	2	1	2	1	1	2	2];
+batch = [1 1 1 1 1 1 1 2 1 1 1 2 2 2 2 1 2 2 1 2 1 2 1 1 2 2];
 
 % biological covariate matrix: preserve variability associated with these variables
 
-% Order is age, disease duration, etiv, sex (1=F), response group, time since implantation
-mod = xlsread('~/Desktop/CD_Volumetry/Mod_matrix.xlsx');
+% Order is age, disease duration, etiv, sex (1=F), response group
+mod = xlsread('~/Desktop/mod_matrix_harm.xlsx');
 
-% suit_harm = combat(fs_dat, batch, mod, 1);
-
-bstem_peduncle_harm = combat(dat, batch, mod, 1);
-
-%peduncle_harm = combat(peduncle_dat, batch, mod, 1);
+dat_harm = combat(dat, batch, mod, 1);
 
 %%% Write this out:
 
 % Convert from double to table; 
 
-% harm_suit = table(suit_harm);
-% harm_fs = table(suit_harm);
-% harm_peduncle=table(peduncle_harm);
+dat_harm_table = table(dat_harm);
 
-harm_bstem_peduncle = table(bstem_peduncle_harm);
-
-harm_bstem_peduncle_file = '/Users/neuro-239/Desktop/CD_Volumetry/bstem_peduncle_harm.xlsx';
-writetable(harm_bstem_peduncle_file,filename,'Sheet',1,'WriteVariableNames',false);
-
-%harm_peduncle_file = '/Users/neuro-239/Desktop/CD_Volumetry/peduncle_harm.xlsx';
-%writetable(harm_peduncle_file,filename,'Sheet',1,'WriteVariableNames',false);
-
-%harm_suit_file = '/Users/neuro-239/Desktop/CD_Volumetry/suit_harm.xlsx';
-%writetable(harm_suit_file,filename,'Sheet',1,'WriteVariableNames',false);
-
-%harm_fs_file = '/Users/neuro-239/Desktop/CD_Volumetry/fs_harm.xlsx';
-%writetable(harm_fs_file,filename,'Sheet',1,'WriteVariableNames',false);
+dat_harm_table_file = '/Users/neuro-239/Desktop/ped_fs_harm.xlsx';
+writetable(dat_harm_table_file,filename,'Sheet',1,'WriteVariableNames',false);
