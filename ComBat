@@ -1,7 +1,7 @@
 ComBat Code
 
 % Addpath to ComBat
-addpath('/Applications/ComBatHarmonization-master/Matlab/scripts');
+addpath('/Applications/ComBat/Matlab/scripts');
 
 % Assign dats as the input matrix (raw (pre-harmonised) SUIT (peduncles) and FS brainstem volumes)
 #suit_dat = xlsread('~/Desktop/CD_Volumetry/suit_dat.xlsx');
