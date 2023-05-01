@@ -4,27 +4,26 @@ library(pROC)
 
 # Will need to use the corrected values (following linear model confound correction) from regions identified as sig following correction
 
-# sig_regions: pons, brainstem, lSCP, rSCP, lMCP, rMCP
+# peduncles: rSCP (2), rMCP (3), lMCP (4), lICP (6)
+# brainstem nuclei: 
 
 mod_matrix <- read_excel("~/Desktop/CD_Volumetry/Mod_matrix_motor_score.xlsx", col_names = FALSE)
 demographics <- data.frame(sex = mod_matrix[, 1], group = mod_matrix[, 2], etiv = mod_matrix[, 3], age = mod_matrix[, 4], dis_dur = mod_matrix[, 5])
 names(demographics) <- c("sex", "group", "age", "dis_dur")
 
-bstem_peduncle_vols <- read_excel("~/Desktop/CD_Volumetry/bstem_peduncle_harm_motor_score.xlsx", col_names = FALSE)
+dat <- read_excel("~/Desktop/CD_Volumetry/bstem_peduncle_harm_motor_score.xlsx", col_names = FALSE)
 dat <- t(bstem_peduncle_vols)
 
-pons_c <- dat[,2]
-bstem_c <- dat[,5]
-lSCP_c <- dat[,6]
-rSCP_c <- dat[,7]
-lMCP_c <- dat[,8]
-rMCP_c <- dat[,9]
+rSCP_c <- dat[,2]
+rMCP_c <- dat[,3]
+lMCP_c <- dat[,4]
+lICP_c <- dat[,6]
 
-regions_c <- list(pons_c = pons_c, bstem_c = bstem_c, lSCP_c = lSCP_c, rSCP = rSCP, lMCP = lMCP, rMCP = rMCP)
+regions_c <- list(rSCP = rSCP, rMCP = rMCP, lMCP = lMCP, lCIP = lCIP, ...)
 correc_regions <- list()
 
 # Class labels (0 = SO)
-outcome <- c(0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1)
+outcome <- c(0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1)
 
 for (i in seq_along(regions_c)) {
   y <- regions_c[[i]]
@@ -39,14 +38,6 @@ for (i in seq_along(regions_c)) {
   correc_regions[[i]] <- y + region_resid
   
 }
-
-# additional columns
-
-# left and right scp
-correc_regions[[7]] <- correc_regions[[3]] + correc_regions[[4]]
-
-# left and right mcp
-correc_regions[[8]] <- correc_regions[[5]] + correc_regions[[6]]
 
 # fit logistic models
 
